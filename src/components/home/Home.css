@@ -1,0 +1,13 @@
+.container {
+  position: relative;
+  display: flex;
+  margin-top: 30px;
+  justify-content: center;
+  justify-items: center;
+
+}
+
+.container img {
+  overflow: auto;
+  height: 600px !important;
+}
