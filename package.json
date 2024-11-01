@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
+    "@mui/material": "^6.1.6",
     "@mysten/dapp-kit": "^0.13.2",
     "@mysten/sui": "1.1.0",
     "@mysten/sui.js": "^0.54.1",
@@ -23,9 +26,11 @@
     "react-dom": "^18.2.0",
     "react-p5": "^1.4.1",
     "react-router-dom": "^6.27.0",
+    "react-tooltip": "^5.28.0",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.32",
     "@types/react": "^18.0.22",
     "@types/react-dom": "^18.0.7",
     "@vitejs/plugin-react": "^4.3.1",
