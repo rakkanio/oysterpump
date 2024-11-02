@@ -6,6 +6,14 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
+import MintOyster from './MintOyster'
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 
 function PlayboardComponent() {
@@ -13,10 +21,37 @@ function PlayboardComponent() {
   let [tooltipIsOpen1, setTooltipIsOpen1] = React.useState(false);
   let [tooltipIsOpen2, setTooltipIsOpen2] = React.useState(false);
   let [tooltipIsOpen3, setTooltipIsOpen3] = React.useState(false);
+  let [digest, setdigest] = React.useState('');
+  let isOyster1Open = false, isOyster2Open = false, isOyster3Open = false;
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  let mintResponse: any = {}
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   function closeTooltip() {
     setTooltipIsOpen1(false);
     setTooltipIsOpen2(false);
     setTooltipIsOpen3(false);
+    isOyster1Open = false
+    isOyster2Open = false
+    isOyster3Open = false
+  }
+  const oyster = new MintOyster()
+  async function mintOyster() {
+    const nftContractAddr = oyster.nftContractAddr
+    mintResponse = await oyster.handleSignAndExecuteTransaction(nftContractAddr, {
+      isCustomExecution: true,
+    })
+    setdigest(mintResponse.digest)
+    closeTooltip()
+    setOpen(true)
   }
   let objImage: any = null;
   let moveImgLeft: number = 0
@@ -47,7 +82,6 @@ function PlayboardComponent() {
       rect1.top > rect2.bottom         // Element 1 is below Element 2 
     );
   }
-  let isOyster1Open = false, isOyster2Open = false, isOyster3Open = false;
 
 
   function getKeyAndMove(e: any) {
@@ -87,13 +121,7 @@ function PlayboardComponent() {
       console.log('oyster3 in')
     }
     else {
-      console.log("The elements are not touching.");
-      setTooltipIsOpen1(false)
-      setTooltipIsOpen2(false)
-      setTooltipIsOpen3(false)
-      isOyster1Open = false
-      isOyster2Open = false
-      isOyster3Open = false
+      closeTooltip()
     }
   }
   function moveUp() {
@@ -121,13 +149,7 @@ function PlayboardComponent() {
       console.log('oyster3 in')
     }
     else {
-      console.log("The elements are not touching.");
-      setTooltipIsOpen1(false)
-      setTooltipIsOpen2(false)
-      setTooltipIsOpen3(false)
-      isOyster1Open = false
-      isOyster2Open = false
-      isOyster3Open = false
+      closeTooltip()
     }
   }
   function moveDown() {
@@ -159,7 +181,7 @@ function PlayboardComponent() {
             <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
             <br />
 
-            <em><Button variant="contained">Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
+            <em><Button variant="contained" onClick={mintOyster}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
             <br />
           </React.Fragment>
         } disableHoverListener={true}
@@ -183,7 +205,7 @@ function PlayboardComponent() {
             <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
             <br />
 
-            <em><Button variant="contained">Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
+            <em><Button variant="contained" onClick={mintOyster}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
             <br />
           </React.Fragment>
         } disableHoverListener={true}
@@ -199,7 +221,7 @@ function PlayboardComponent() {
               <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
               <br />
 
-              <em><Button variant="contained">Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
+              <em><Button variant="contained" onClick={mintOyster}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
               <br />
             </React.Fragment>
           } disableHoverListener={true}
@@ -209,6 +231,31 @@ function PlayboardComponent() {
       </div>
 
     </div>
+    <React.Fragment>
+      <Dialog
+        fullScreen={fullScreen}
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="responsive-dialog-title"
+      >
+        <DialogTitle id="responsive-dialog-title">
+          {"NFT minted successfully"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+           <p>digestId: {digest && digest}</p>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          {/* <Button autoFocus onClick={handleClose}>
+            Disagree
+          </Button> */}
+          <Button onClick={handleClose} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
   </>
 }
 
