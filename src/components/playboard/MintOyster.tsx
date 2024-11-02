@@ -11,7 +11,7 @@ import { useMemo } from "react";
 const sampleNft = new Map([
     [
       "sui:devnet",
-      "0xe146dbd6d33d7227700328a9421c58ed34546f998acdc42a1d05b4818b49faa2::nft::mint",
+      "0x7e4dc9e4d61f69aa3f07edc58df0ec54298296cdd489c6748f656c8cd72e659f::nft::mint",
     ],
     [
       "sui:testnet",
