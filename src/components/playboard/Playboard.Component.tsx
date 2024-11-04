@@ -1,6 +1,7 @@
 import "./Playboard.css";
 import boyImg from "./../../assets/boy.jpeg";
-import oyterImg from "./../../assets/oyster.avif";
+import oysterLeftImg from "./../../assets/point_left.jpeg";
+import oysterRightImg from "./../../assets/point_2.jpeg";
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -19,7 +20,6 @@ import DialogTitle from '@mui/material/DialogTitle';
 function PlayboardComponent() {
   const [elementPosition, setElementPosition,] = useState(50)
   let [tooltipIsOpen1, setTooltipIsOpen1] = React.useState(false);
-  let [tooltipIsOpen2, setTooltipIsOpen2] = React.useState(false);
   let [tooltipIsOpen3, setTooltipIsOpen3] = React.useState(false);
   let [digest, setdigest] = React.useState('');
   let isOyster1Open = false, isOyster2Open = false, isOyster3Open = false;
@@ -37,7 +37,6 @@ function PlayboardComponent() {
 
   function closeTooltip() {
     setTooltipIsOpen1(false);
-    setTooltipIsOpen2(false);
     setTooltipIsOpen3(false);
     isOyster1Open = false
     isOyster2Open = false
@@ -112,11 +111,8 @@ function PlayboardComponent() {
       setTooltipIsOpen1(true)
       isOyster1Open = true
       console.log('oyster1 in')
-    } else if (isOverlapping(oyster2, object) && !isOyster2Open) {
-      isOyster2Open = true
-      setTooltipIsOpen2(true)
-      console.log('oyster2 in')
-    } else if (isOverlapping(oyster3, object) && !isOyster3Open) {
+    }
+     else if (isOverlapping(oyster3, object) && !isOyster3Open) {
       setTooltipIsOpen3(true)
       isOyster3Open = true
       console.log('oyster3 in')
@@ -134,16 +130,11 @@ function PlayboardComponent() {
 
     let object = document.getElementById("object");
     let oyster1 = document.getElementById("oyster1");
-    let oyster2 = document.getElementById("oyster2");
     let oyster3 = document.getElementById("oyster3");
     if (isOverlapping(oyster1, object) && !isOyster1Open) {
       setTooltipIsOpen1(true)
       isOyster1Open = true
       console.log('oyster1 in')
-    } else if (isOverlapping(oyster2, object) && !isOyster2Open) {
-      isOyster2Open = true
-      setTooltipIsOpen2(true)
-      console.log('oyster2 in')
     } else if (isOverlapping(oyster3, object) && !isOyster3Open) {
       setTooltipIsOpen3(true)
       isOyster3Open = true
@@ -179,7 +170,7 @@ function PlayboardComponent() {
         onClose={() => setTooltipIsOpen1(false)}
         title={
           <React.Fragment>
-            <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
+            <Typography color="inherit"><small>Collect Oyster or move to next</small></Typography>
             <br />
 
             <em><Button variant="contained" onClick={() => mintOyster(false)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
@@ -187,7 +178,7 @@ function PlayboardComponent() {
           </React.Fragment>
         } disableHoverListener={true}
       >
-        <img id="oyster1" onKeyDown={getKeyAndMove} src={oyterImg} alt="home_p" height={50} />
+        <img id="oyster1" onKeyDown={getKeyAndMove} src={oysterLeftImg} alt="home_p" height={50} />
       </HtmlTooltip>
 
 
@@ -197,7 +188,8 @@ function PlayboardComponent() {
         right: `${elementPosition}px`,
         position: 'relative'
       }} src={boyImg} alt="home_p" height={100} />
-      <HtmlTooltip
+
+      {/* <HtmlTooltip
         open={tooltipIsOpen2}
         onOpen={() => setTooltipIsOpen2(true)}
         onClose={() => setTooltipIsOpen2(false)}
@@ -212,22 +204,23 @@ function PlayboardComponent() {
         } disableHoverListener={true}
       >
         <img id="oyster2" onKeyDown={getKeyAndMove} src={oyterImg} alt="home_p" height={50} />
-      </HtmlTooltip>
+      </HtmlTooltip> */}
       <div>
         <HtmlTooltip open={tooltipIsOpen3}
           onOpen={() => setTooltipIsOpen3(true)}
           onClose={() => setTooltipIsOpen3(false)}
           title={
             <React.Fragment>
-              <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
+              <Typography color="inherit"><small>Try Luck or move to next</small></Typography>
               <br />
+              
 
               <em><Button variant="contained" onClick={() => mintOyster(true)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
               <br />
             </React.Fragment>
           } disableHoverListener={true}
         >
-          <img id="oyster3" onKeyDown={getKeyAndMove} src={oyterImg} alt="home_p" height={50} />
+          <img id="oyster3" onKeyDown={getKeyAndMove} src={oysterRightImg} alt="home_p" height={50} />
         </HtmlTooltip>
       </div>
 
