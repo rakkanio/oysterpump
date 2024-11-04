@@ -44,10 +44,11 @@ function PlayboardComponent() {
     isOyster3Open = false
   }
   const oyster = new MintOyster()
-  async function mintOyster() {
+  async function mintOyster(isSTatic: boolean) {
     const nftContractAddr = oyster.nftContractAddr
     mintResponse = await oyster.handleSignAndExecuteTransaction(nftContractAddr, {
       isCustomExecution: true,
+      isSendStatic: isSTatic
     })
     setdigest(mintResponse.digest)
     closeTooltip()
@@ -181,7 +182,7 @@ function PlayboardComponent() {
             <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
             <br />
 
-            <em><Button variant="contained" onClick={mintOyster}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
+            <em><Button variant="contained" onClick={() => mintOyster(false)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
             <br />
           </React.Fragment>
         } disableHoverListener={true}
@@ -205,7 +206,7 @@ function PlayboardComponent() {
             <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
             <br />
 
-            <em><Button variant="contained" onClick={mintOyster}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
+            <em><Button variant="contained" onClick={() => mintOyster(true)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
             <br />
           </React.Fragment>
         } disableHoverListener={true}
@@ -221,7 +222,7 @@ function PlayboardComponent() {
               <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
               <br />
 
-              <em><Button variant="contained" onClick={mintOyster}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
+              <em><Button variant="contained" onClick={() => mintOyster(true)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
               <br />
             </React.Fragment>
           } disableHoverListener={true}

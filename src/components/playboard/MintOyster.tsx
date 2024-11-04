@@ -36,17 +36,11 @@ class MintOyster {
         return sampleNft.get(this.wallet.chain.id) ?? "";
       }, [this.wallet]);
 
-    async handleSignAndExecuteTransaction(
-        target: string | undefined,
-        opts?: {
-            isCustomExecution?: boolean;
-        }
-    ) {
+    async handleSignAndExecuteTransaction( target: string | undefined, opts?: { isCustomExecution?: boolean, isSendStatic?: boolean }) {
         if (!target) return;
-        try {
+        try { 
             const tx = new Transaction();
-            tx.setGasBudget(100000000),
-            tx.moveCall({
+            let reqArgs = {
                 target: target,
                 arguments: [
                     tx.pure.string("Suiet NFT"),
@@ -54,7 +48,20 @@ class MintOyster {
                     tx.pure.string('0x8'), // Random generator object
                     tx.pure.string('https://api-mainnet.suifrens.sui.io/suifrens/0x21213e8306d052133b81c5b7d80a11d23f38e4dd2a2c5b26c96c2ef99915a833/svg'),
                 ],
-            });
+            }
+            if(opts?.isSendStatic){
+                reqArgs = {
+                    target: '0x7e4dc9e4d61f69aa3f07edc58df0ec54298296cdd489c6748f656c8cd72e659f::open_oyster::try_luck',
+                    arguments: [
+                        tx.pure.string("Suiet NFT"),
+                        tx.pure.string("Suiet Sample NFT"),
+                        tx.pure.string('0x8'), // Random generator object
+                        tx.pure.string('https://api-mainnet.suifrens.sui.io/suifrens/0x21213e8306d052133b81c5b7d80a11d23f38e4dd2a2c5b26c96c2ef99915a833/svg'),
+                    ],
+                }
+            }
+            tx.setGasBudget(100000000),
+            tx.moveCall(reqArgs);
 
             if (!opts?.isCustomExecution) {
                 const resData = await this.wallet.signAndExecuteTransaction({
