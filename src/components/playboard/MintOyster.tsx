@@ -51,17 +51,13 @@ class MintOyster {
             }
             if(opts?.isSendStatic){
                 reqArgs = {
-                    target: '0x7e4dc9e4d61f69aa3f07edc58df0ec54298296cdd489c6748f656c8cd72e659f::open_oyster::try_luck',
+                    target: '0x6a76b2f870075ee998a438787a914c61a9edb924a0f6d225d7804247f5c7a311::open_oyster::try_luck',
                     arguments: [
-                        tx.pure.string("Suiet NFT"),
-                        tx.pure.string("Suiet Sample NFT"),
-                        tx.pure.string('0x8'), // Random generator object
-                        tx.pure.string('https://api-mainnet.suifrens.sui.io/suifrens/0x21213e8306d052133b81c5b7d80a11d23f38e4dd2a2c5b26c96c2ef99915a833/svg'),
-                    ],
+                        tx.pure.string('0x8')   ],
                 }
             }
             tx.setGasBudget(100000000),
-            tx.moveCall(reqArgs);
+            tx. moveCall(reqArgs);
 
             if (!opts?.isCustomExecution) {
                 const resData = await this.wallet.signAndExecuteTransaction({

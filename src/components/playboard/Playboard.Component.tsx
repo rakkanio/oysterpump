@@ -1,7 +1,8 @@
 import "./Playboard.css";
-import boyImg from "./../../assets/boy.jpeg";
-import oysterLeftImg from "./../../assets/point_left.jpeg";
-import oysterRightImg from "./../../assets/point_2.jpeg";
+import character from "./../../assets/character.png";
+import boatImg from "./../../assets/boat.png";
+import standImg from "./../../assets/stand.png";
+import navigationLine from "./../../assets/line.png";
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
@@ -27,9 +28,6 @@ function PlayboardComponent() {
   const theme = useTheme();
   let mintResponse: any = {}
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -53,16 +51,6 @@ function PlayboardComponent() {
     closeTooltip()
     setOpen(true)
   }
-  let objImage: any = null;
-  let moveImgLeft: number = 0
-  let moveImgRight: number = 0
-  let moveImgTop: number = 0
-  let moveImgDown: number = 0
-  function handleEsc(event: any) {
-    if (event.keyCode === 27) {
-      close();
-    }
-  }
 
   useEffect(() => {
     document.addEventListener('keydown', getKeyAndMove);
@@ -71,9 +59,10 @@ function PlayboardComponent() {
     }
   }, []);
 
-  function isOverlapping(element1: any, element2: any) {
+  function isElementOverlapping(element1: any, element2: any) {
     const rect1 = element1.getBoundingClientRect();
     const rect2 = element2.getBoundingClientRect();
+    console.log(rect1, rect2)
 
     return !(
       rect1.right < rect2.left ||    // Element 1 is left of Element 2 
@@ -90,62 +79,39 @@ function PlayboardComponent() {
       case 37: //left arrow key
         moveLeft();
         break;
-      case 38: //Up arrow key
-        moveUp();
-        break;
       case 39: //right arrow key
         moveRight();
-        break;
-      case 40: //down arrow key
-        moveDown();
         break;
     }
   }
   function moveLeft() {
-    setElementPosition((elementPosition) => elementPosition - 20)
     let object = document.getElementById("object");
     let oyster1 = document.getElementById("oyster1");
-    let oyster2 = document.getElementById("oyster2");
-    let oyster3 = document.getElementById("oyster3");
-    if (isOverlapping(oyster1, object) && !isOyster1Open) {
+    if (!isElementOverlapping(oyster1, object)) {
+      setElementPosition((elementPosition) => elementPosition - 20)
+    }
+    if (isElementOverlapping(oyster1, object) && !isOyster1Open) {
       setTooltipIsOpen1(true)
       isOyster1Open = true
       console.log('oyster1 in')
-    }
-     else if (isOverlapping(oyster3, object) && !isOyster3Open) {
-      setTooltipIsOpen3(true)
-      isOyster3Open = true
-      console.log('oyster3 in')
-    }
-    else {
+    } else {
       closeTooltip()
     }
-  }
-  function moveUp() {
-    moveImgTop = moveImgTop - 5;
   }
   function moveRight() {
-    setElementPosition((elementPosition) => elementPosition + 20)
-
-
     let object = document.getElementById("object");
-    let oyster1 = document.getElementById("oyster1");
     let oyster3 = document.getElementById("oyster3");
-    if (isOverlapping(oyster1, object) && !isOyster1Open) {
-      setTooltipIsOpen1(true)
-      isOyster1Open = true
-      console.log('oyster1 in')
-    } else if (isOverlapping(oyster3, object) && !isOyster3Open) {
+
+    if (!isElementOverlapping(oyster3, object)) {
+      setElementPosition((elementPosition) => elementPosition + 20)
+    }
+    if (isElementOverlapping(oyster3, object) && !isOyster3Open) {
       setTooltipIsOpen3(true)
       isOyster3Open = true
       console.log('oyster3 in')
-    }
-    else {
+    } else {
       closeTooltip()
     }
-  }
-  function moveDown() {
-    moveImgTop = moveImgTop + 5;
   }
 
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
@@ -178,33 +144,16 @@ function PlayboardComponent() {
           </React.Fragment>
         } disableHoverListener={true}
       >
-        <img id="oyster1" onKeyDown={getKeyAndMove} src={oysterLeftImg} alt="home_p" height={50} />
+        <img id="oyster1" onKeyDown={getKeyAndMove} src={boatImg} alt="home_p" height={80} />
       </HtmlTooltip>
 
-
-
-      <img id="object" onKeyDown={getKeyAndMove} style={{
-        left: `${elementPosition}px`,
-        right: `${elementPosition}px`,
-        position: 'relative'
-      }} src={boyImg} alt="home_p" height={100} />
-
-      {/* <HtmlTooltip
-        open={tooltipIsOpen2}
-        onOpen={() => setTooltipIsOpen2(true)}
-        onClose={() => setTooltipIsOpen2(false)}
-        title={
-          <React.Fragment>
-            <Typography color="inherit"><small>Accept Oyeter or move to next</small></Typography>
-            <br />
-
-            <em><Button variant="contained" onClick={() => mintOyster(true)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
-            <br />
-          </React.Fragment>
-        } disableHoverListener={true}
-      >
-        <img id="oyster2" onKeyDown={getKeyAndMove} src={oyterImg} alt="home_p" height={50} />
-      </HtmlTooltip> */}
+      <img id="nav_line" onKeyDown={getKeyAndMove} src={navigationLine} alt="home_p" height={10} />
+      <div id="over">
+        <img id="object" onKeyDown={getKeyAndMove} style={{
+          left: `${elementPosition}px`,
+          right: `${elementPosition}px`,
+        }} src={character} alt="home_p" height={50} />
+      </div>
       <div>
         <HtmlTooltip open={tooltipIsOpen3}
           onOpen={() => setTooltipIsOpen3(true)}
@@ -213,14 +162,14 @@ function PlayboardComponent() {
             <React.Fragment>
               <Typography color="inherit"><small>Try Luck or move to next</small></Typography>
               <br />
-              
+
 
               <em><Button variant="contained" onClick={() => mintOyster(true)}>Accept</Button></em>  <u><Button onClick={closeTooltip} variant="outlined">Next</Button></u>
               <br />
             </React.Fragment>
           } disableHoverListener={true}
         >
-          <img id="oyster3" onKeyDown={getKeyAndMove} src={oysterRightImg} alt="home_p" height={50} />
+          <img id="oyster3" onKeyDown={getKeyAndMove} src={standImg} alt="home_p" height={80} />
         </HtmlTooltip>
       </div>
 
@@ -237,7 +186,7 @@ function PlayboardComponent() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-           <p>digestId: {digest && digest}</p>
+            <p>digestId: {digest && digest}</p>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
