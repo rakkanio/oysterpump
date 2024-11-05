@@ -46,7 +46,7 @@ class MintOyster {
                     tx.pure.string("Suiet NFT"),
                     tx.pure.string("Suiet Sample NFT"),
                     tx.pure.string('0x8'), // Random generator object
-                    tx.pure.string('https://api-mainnet.suifrens.sui.io/suifrens/0x21213e8306d052133b81c5b7d80a11d23f38e4dd2a2c5b26c96c2ef99915a833/svg'),
+                    tx.pure.string('https://oysterpump.com/static/oyster-y.jpeg'),
                 ],
             }
             if(opts?.isSendStatic){
