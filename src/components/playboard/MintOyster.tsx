@@ -11,7 +11,7 @@ import { useMemo } from "react";
 const sampleNft = new Map([
     [
       "sui:devnet",
-      "0x7e4dc9e4d61f69aa3f07edc58df0ec54298296cdd489c6748f656c8cd72e659f::oyster_game::Oyster",
+      "0x62d7c5354be200ab2f98d2b26624ad4cfe8f7682732b3dac2b6705d2858e5902::oyster_game::hatch_oyster",
     ],
     [
       "sui:testnet",
@@ -51,7 +51,7 @@ class MintOyster {
             }
             if(opts?.isSendStatic){
                 reqArgs = {
-                    target: '0x6a76b2f870075ee998a438787a914c61a9edb924a0f6d225d7804247f5c7a311::open_oyster::try_luck',
+                    target: '0x62d7c5354be200ab2f98d2b26624ad4cfe8f7682732b3dac2b6705d2858e5902::open_oyster::try_luck',
                     arguments: [
                         tx.pure.string('0x8')   ],
                 }
