@@ -51,7 +51,7 @@ class MintOyster {
             }
             if(opts?.isSendStatic){
                 reqArgs = {
-                    target: '0x62d7c5354be200ab2f98d2b26624ad4cfe8f7682732b3dac2b6705d2858e5902::open_oyster::try_luck',
+                    target: '0x53931223a6c484af608ff7f853c96066723ca0fc044e7ff92c80053ca5c218af::open_oyster::try_luck',
                     arguments: [
                         tx.pure.string('0x8')   ],
                 }

@@ -62,7 +62,6 @@ function PlayboardComponent() {
   function isElementOverlapping(element1: any, element2: any) {
     const rect1 = element1.getBoundingClientRect();
     const rect2 = element2.getBoundingClientRect();
-    console.log(rect1, rect2)
 
     return !(
       rect1.right < rect2.left ||    // Element 1 is left of Element 2 
