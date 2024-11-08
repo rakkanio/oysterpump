@@ -1,5 +1,7 @@
 import "./Playboard.css";
 import character from "./../../assets/character.png";
+import characterRightMove from "./../../assets/right_moving.png";
+import characterLefttMove from "./../../assets/left_movement.png";
 import boatImg from "./../../assets/boat.png";
 import standImg from "./../../assets/stand.png";
 import navigationLine from "./../../assets/line.png";
@@ -22,6 +24,7 @@ function PlayboardComponent() {
   const [elementPosition, setElementPosition,] = useState(50)
   let [tooltipIsOpen1, setTooltipIsOpen1] = React.useState(false);
   let [tooltipIsOpen3, setTooltipIsOpen3] = React.useState(false);
+  let [characterDirection, setCharacterDirection] = React.useState(character);
   let [digest, setdigest] = React.useState('');
   let isOyster1Open = false, isOyster2Open = false, isOyster3Open = false;
   const [open, setOpen] = React.useState(false);
@@ -86,6 +89,8 @@ function PlayboardComponent() {
   function moveLeft() {
     let object = document.getElementById("object");
     let oyster1 = document.getElementById("oyster1");
+    setCharacterDirection(characterLefttMove)
+    
     if (!isElementOverlapping(oyster1, object)) {
       setElementPosition((elementPosition) => elementPosition - 20)
     }
@@ -100,6 +105,7 @@ function PlayboardComponent() {
   function moveRight() {
     let object = document.getElementById("object");
     let oyster3 = document.getElementById("oyster3");
+    setCharacterDirection(characterRightMove)
 
     if (!isElementOverlapping(oyster3, object)) {
       setElementPosition((elementPosition) => elementPosition + 20)
@@ -127,7 +133,9 @@ function PlayboardComponent() {
   }));
 
   return <>
-
+      <div className="instruct">
+         <p>&lt;- Use Arrow key to move -&gt;</p>
+      </div>
     <div className="main-div">
       <HtmlTooltip
         open={tooltipIsOpen1}
@@ -151,7 +159,7 @@ function PlayboardComponent() {
         <img id="object" onKeyDown={getKeyAndMove} style={{
           left: `${elementPosition}px`,
           right: `${elementPosition}px`,
-        }} src={character} alt="home_p" height={50} />
+        }} src={characterDirection} alt="home_p" height={50} />
       </div>
       <div>
         <HtmlTooltip open={tooltipIsOpen3}

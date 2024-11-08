@@ -1,7 +1,6 @@
 .main-div {
   background-color: #8080804f;
   position: relative;
-  margin-top: 5% !important;
   width: 80%;
   margin-right: 20%;
   display: flex;
@@ -45,4 +44,17 @@ img {
   position: absolute;
   margin-top: -16px;
   margin-right: 10%;
+}
+.instruct{
+  display: flex;
+    align-items: flex-end;
+    align-content: flex-end;
+    height: 100px;
+    justify-content: space-around;
+}
+
+.instruct p{
+  font-size: 22px;
+    font-weight: 500;
+    color: #0000009e;
 }
